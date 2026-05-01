@@ -1,10 +1,11 @@
-name: Publish to NPM
+name: Smart NPM Publish
 
 on:
   push:
     branches:
-      - main
       - dev
+  release:
+    types: [published]
 
 jobs:
   publish:
@@ -27,24 +28,27 @@ jobs:
       - name: Build Project
         run: npm run build
 
+      # 1. Automatic DEV Publication (on push/bump to dev branch)
       - name: Publish Dev Version
-        if: github.ref == 'refs/heads/dev'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         run: |
-          # Extrair versão base e adicionar hash do commit
-          BASE_VERSION=$(node -p "require('./package.json').version.split('-')[0]")
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          NEW_VERSION="${BASE_VERSION}-dev.${SHORT_SHA}"
+          # Get current version from package.json
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
           
-          # Atualizar package.json temporariamente para o publish
-          npm version $NEW_VERSION --no-git-tag-version
+          # If version doesn't have '-dev', append suffix for safety
+          if [[ ! $CURRENT_VERSION == *"-dev"* ]]; then
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            NEW_VERSION="${CURRENT_VERSION}-dev.${SHORT_SHA}"
+            npm version $NEW_VERSION --no-git-tag-version
+          fi
           
-          # Publicar com a tag dev
           npm publish --tag dev --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      # 2. Stable MAIN Publication (only when a Release is published)
       - name: Publish Stable Version
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name == 'release'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
