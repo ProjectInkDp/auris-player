@@ -1,6 +1,6 @@
 {
   "name": "@projectinkdp/auris-player",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "The official high-performance audio engine for AurisLink.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
