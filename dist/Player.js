@@ -2,35 +2,37 @@ import { EventEmitter } from 'node:events';
 export class Player extends EventEmitter {
     guildId;
     track = null;
-    state = 'IDLE';
-    position = 0;
     volume = 100;
+    paused = false;
+    state;
     constructor(guildId) {
         super();
         this.guildId = guildId;
+        this.state = {
+            time: Date.now(),
+            position: 0,
+            connected: false,
+            ping: -1
+        };
     }
     play(track) {
         this.track = track;
-        this.state = 'PLAYING';
-        this.position = 0;
+        this.paused = false;
+        this.state.position = 0;
         this.emit('start', track);
     }
     pause() {
-        if (this.state === 'PLAYING') {
-            this.state = 'PAUSED';
-            this.emit('pause');
-        }
+        this.paused = true;
+        this.emit('pause');
     }
     resume() {
-        if (this.state === 'PAUSED') {
-            this.state = 'PLAYING';
-            this.emit('resume');
-        }
+        this.paused = false;
+        this.emit('resume');
     }
     stop() {
-        this.state = 'STOPPED';
         this.track = null;
-        this.position = 0;
+        this.paused = false;
+        this.state.position = 0;
         this.emit('stop');
     }
     setVolume(volume) {

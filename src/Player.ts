@@ -1,53 +1,71 @@
 import { EventEmitter } from 'node:events';
 
-export interface Track {
-  title: string;
-  author: string;
+export interface TrackInfo {
   identifier: string;
-  uri: string;
+  isSeekable: boolean;
+  author: string;
   length: number;
   isStream: boolean;
+  position: number;
+  title: string;
+  uri: string | null;
+  artworkUrl: string | null;
+  isrc: string | null;
+  sourceName: string;
 }
 
-export type PlayerState = 'IDLE' | 'PLAYING' | 'PAUSED' | 'STOPPED';
+export interface Track {
+  encoded: string;
+  info: TrackInfo;
+  pluginInfo: Record<string, unknown>;
+}
+
+export interface PlayerState {
+  time: number;
+  position: number;
+  connected: boolean;
+  ping: number;
+}
 
 export class Player extends EventEmitter {
   public guildId: string;
   public track: Track | null = null;
-  public state: PlayerState = 'IDLE';
-  public position: number = 0;
   public volume: number = 100;
+  public paused: boolean = false;
+  public state: PlayerState;
 
   constructor(guildId: string) {
     super();
     this.guildId = guildId;
+    this.state = {
+      time: Date.now(),
+      position: 0,
+      connected: false,
+      ping: -1
+    };
   }
 
   public play(track: Track): void {
     this.track = track;
-    this.state = 'PLAYING';
-    this.position = 0;
+    this.paused = false;
+    this.state.position = 0;
     this.emit('start', track);
   }
 
   public pause(): void {
-    if (this.state === 'PLAYING') {
-      this.state = 'PAUSED';
-      this.emit('pause');
-    }
+    this.paused = true;
+    this.emit('pause');
   }
 
   public resume(): void {
-    if (this.state === 'PAUSED') {
-      this.state = 'PLAYING';
-      this.emit('resume');
-    }
+    this.paused = false;
+    this.emit('resume');
   }
 
   public stop(): void {
-    this.state = 'STOPPED';
     this.track = null;
-    this.position = 0;
+    this.paused = false;
+    this.state.position = 0;
     this.emit('stop');
   }
 

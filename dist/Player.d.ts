@@ -1,19 +1,34 @@
 import { EventEmitter } from 'node:events';
-export interface Track {
-    title: string;
-    author: string;
+export interface TrackInfo {
     identifier: string;
-    uri: string;
+    isSeekable: boolean;
+    author: string;
     length: number;
     isStream: boolean;
+    position: number;
+    title: string;
+    uri: string | null;
+    artworkUrl: string | null;
+    isrc: string | null;
+    sourceName: string;
 }
-export type PlayerState = 'IDLE' | 'PLAYING' | 'PAUSED' | 'STOPPED';
+export interface Track {
+    encoded: string;
+    info: TrackInfo;
+    pluginInfo: Record<string, unknown>;
+}
+export interface PlayerState {
+    time: number;
+    position: number;
+    connected: boolean;
+    ping: number;
+}
 export declare class Player extends EventEmitter {
     guildId: string;
     track: Track | null;
-    state: PlayerState;
-    position: number;
     volume: number;
+    paused: boolean;
+    state: PlayerState;
     constructor(guildId: string);
     play(track: Track): void;
     pause(): void;
