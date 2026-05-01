@@ -1,25 +1,28 @@
 <div align="center">
+  <img src="https://raw.githubusercontent.com/ProjectInkDp/aurislink/main/images/logo.png" alt="AurisPlayer" width="120"/>
   <h1>AurisPlayer</h1>
-  <p>A high-performance, lightweight audio engine for Discord bots, built with TypeScript.</p>
+  <p>The high-performance, lightweight audio engine powering the <b>ProjectInkDp</b> ecosystem.</p>
 
-  ![version](https://img.shields.io/badge/version-1.0.5-blueviolet?style=flat-square)
-  ![license](https://img.shields.io/badge/license-Restricted-red?style=flat-square)
-  ![npm](https://img.shields.io/npm/v/@projectinkdp/auris-player?style=flat-square)
+  [![npm version](https://img.shields.io/npm/v/@projectinkdp/auris-player?style=flat-square&color=a78bfa)](https://www.npmjs.com/package/@projectinkdp/auris-player)
+  [![license](https://img.shields.io/badge/license-Restrictive-red?style=flat-square)](LICENSE)
+  [![platform](https://img.shields.io/badge/platform-Node.js-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 </div>
 
 ---
 
 ## 🚀 Overview
 
-**AurisPlayer** is the core audio engine behind **AurisLink**. It provides a robust, event-driven architecture for managing audio players, tracks, and filters in a Node.js environment. Designed for efficiency and compatibility with the Lavalink v4 protocol.
+**AurisPlayer** is a re-imagined audio engine built from the ground up with **TypeScript**. It serves as the core processing unit for **AurisLink**, providing a robust, event-driven architecture for managing audio players, tracks, and real-time filters.
 
-## ✨ Features
+Unlike traditional solutions, AurisPlayer is designed for **maximum efficiency** and **originality**, ensuring a lightweight footprint without compromising on power.
 
-- **Lavalink v4 Compatible:** Native support for Lavalink v4 track and player structures.
-- **Event-Driven:** Easily hook into player events like `start`, `pause`, `resume`, and `stop`.
-- **Audio Filters:** Built-in support for Equalizer, Timescale, and Tremolo.
-- **Lightweight:** Minimal dependencies and low memory footprint.
-- **TypeScript Native:** Full type safety and organized internal structure.
+## ✨ Key Features
+
+- **Lavalink v4 Protocol:** Full compatibility with the latest Lavalink v4 specifications.
+- **Advanced Audio Filters:** Native support for Equalizer, Timescale (Speed/Pitch), Tremolo, and more.
+- **Event-Driven Architecture:** Granular control with events like `start`, `pause`, `resume`, and `stop`.
+- **Type Safety:** Built with strict TypeScript typings for a developer-friendly experience.
+- **Ultra Lightweight:** Optimized for low memory usage and high-speed execution.
 
 ## 📦 Installation
 
@@ -27,7 +30,7 @@
 npm install @projectinkdp/auris-player
 ```
 
-## 🛠️ Usage
+## 🛠️ Quick Start
 
 ```typescript
 import { Manager } from '@projectinkdp/auris-player';
@@ -39,19 +42,26 @@ player.on('start', (track) => {
   console.log(`Now playing: ${track.info.title}`);
 });
 
-// Play a track
+// Play a track with filters
 player.play(trackData);
+player.setFilters({ timescale: { speed: 1.2, pitch: 1.1 } });
 ```
 
-## 🛡️ License
+## 🛡️ Development & Originality
 
-This project is proprietary software owned by **ProjectInkDp**. 
+Following the **ProjectInkDp** guidelines, this engine is a complete rewrite focused on technical superiority. We do not copy code; we innovate and adapt to create a superior audio experience.
+
+## 📄 License
+
+Copyright (c) 2026 **ProjectInkDp**.
+
+This software is proprietary and protected by a restrictive license. 
 - **Commercial use is strictly prohibited.**
-- **Modification and redistribution are not allowed without prior authorization.**
+- **Unauthorized modification or redistribution is not allowed.**
 - **External contributions are not accepted at this time.**
 
 ---
 
 <div align="center">
-  Maintained by <b>ProjectInkDp</b>
+  Proudly maintained by <b>ProjectInkDp</b>
 </div>
