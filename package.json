@@ -1,7 +1,15 @@
 {
   "name": "@projectinkdp/auris-player",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The official high-performance audio engine for AurisLink.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProjectInkDp/auris-player.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ProjectInkDp/auris-player/issues"
+  },
+  "homepage": "https://github.com/ProjectInkDp/auris-player#readme",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "main": "./dist/index.js",
