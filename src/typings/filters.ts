@@ -19,7 +19,7 @@ export interface Filters {
   equalizer?: EqualizerBand[];
   timescale?: Timescale;
   tremolo?: Tremolo;
-  // Adicionaremos mais conforme a necessidade
+  distortion?: Distortion;
 }
 
 export interface Distortion {
@@ -33,8 +33,4 @@ export interface Distortion {
   scale?: number;
 }
 
-declare module './index.js' {
-  interface Filters {
-    distortion?: Distortion;
-  }
-}
+
