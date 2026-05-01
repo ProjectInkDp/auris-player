@@ -1,33 +1,54 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Node.js Package
+name: Smart NPM Publish
 
 on:
+  push:
+    branches:
+      - dev
   release:
-    types: [created]
+    types: [published]
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
-          node-version: 20
-      - run: npm ci
-      - run: npm test
+          fetch-depth: 0
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
+      # 1. Automatic DEV Publication (on push/bump to dev branch)
+      - name: Publish Dev Version
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        run: |
+          # Get current version from package.json
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          
+          # If version doesn't have '-dev', append suffix for safety
+          if [[ ! $CURRENT_VERSION == *"-dev"* ]]; then
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            NEW_VERSION="${CURRENT_VERSION}-dev.${SHORT_SHA}"
+            npm version $NEW_VERSION --no-git-tag-version
+          fi
+          
+          npm publish --tag dev --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # 2. Stable MAIN Publication (only when a Release is published)
+      - name: Publish Stable Version
+        if: github.event_name == 'release'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
