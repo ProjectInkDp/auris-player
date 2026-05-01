@@ -1,30 +1,57 @@
 <div align="center">
   <h1>AurisPlayer</h1>
-  <p>The official high-performance audio engine for the ProjectInkDp ecosystem.</p>
+  <p>A high-performance, lightweight audio engine for Discord bots, built with TypeScript.</p>
 
-  ![version](https://img.shields.io/npm/v/@projectinkdp/auris-player?style=flat-square&color=a78bfa)
-  ![license](https://img.shields.io/badge/license-Restrictive-red?style=flat-square)
+  ![version](https://img.shields.io/badge/version-1.0.5-blueviolet?style=flat-square)
+  ![license](https://img.shields.io/badge/license-Restricted-red?style=flat-square)
+  ![npm](https://img.shields.io/npm/v/@projectinkdp/auris-player?style=flat-square)
 </div>
 
 ---
 
-## Overview
+## 🚀 Overview
 
-**AurisPlayer** is a lightweight, high-performance audio processing engine designed specifically for **AurisLink**. It provides the core logic for track management, player state control, and audio source handling in Node.js environments.
+**AurisPlayer** is the core audio engine behind **AurisLink**. It provides a robust, event-driven architecture for managing audio players, tracks, and filters in a Node.js environment. Designed for efficiency and compatibility with the Lavalink v4 protocol.
 
-## Key Features
+## ✨ Features
 
-- **Optimized for Node.js:** Built from the ground up with TypeScript for maximum efficiency.
-- **Player Management:** Robust state machine for handling play, pause, resume, and stop actions.
-- **Source Agnostic:** Designed to work seamlessly with multiple audio providers.
-- **ProjectInkDp Integration:** Native support for the AurisLink protocol.
+- **Lavalink v4 Compatible:** Native support for Lavalink v4 track and player structures.
+- **Event-Driven:** Easily hook into player events like `start`, `pause`, `resume`, and `stop`.
+- **Audio Filters:** Built-in support for Equalizer, Timescale, and Tremolo.
+- **Lightweight:** Minimal dependencies and low memory footprint.
+- **TypeScript Native:** Full type safety and organized internal structure.
 
-## Documentation
+## 📦 Installation
 
-For detailed implementation guides and API references, please visit the [Official Documentation](https://github.com/ProjectInkDp/aurislink-docs).
+```sh
+npm install @projectinkdp/auris-player
+```
 
-## License
+## 🛠️ Usage
 
-Copyright (c) 2026 **ProjectInkDp**.
+```typescript
+import { Manager } from '@projectinkdp/auris-player';
 
-This software is protected by a restrictive license. Commercial use, unauthorized modification, or redistribution is strictly prohibited. See the [LICENSE](LICENSE) file for full terms.
+const manager = new Manager();
+const player = manager.createPlayer('guild_id');
+
+player.on('start', (track) => {
+  console.log(`Now playing: ${track.info.title}`);
+});
+
+// Play a track
+player.play(trackData);
+```
+
+## 🛡️ License
+
+This project is proprietary software owned by **ProjectInkDp**. 
+- **Commercial use is strictly prohibited.**
+- **Modification and redistribution are not allowed without prior authorization.**
+- **External contributions are not accepted at this time.**
+
+---
+
+<div align="center">
+  Maintained by <b>ProjectInkDp</b>
+</div>
