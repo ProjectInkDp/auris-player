@@ -1,11 +1,13 @@
 import { EventEmitter } from 'node:events';
 import { Track, PlayerState } from '../typings/index.js';
+import { Filters } from '../typings/filters.js';
 
 export class Player extends EventEmitter {
   public guildId: string;
   public track: Track | null = null;
   public volume: number = 100;
   public paused: boolean = false;
+  public filters: Filters = {};
   public state: PlayerState;
 
   constructor(guildId: string) {
@@ -45,6 +47,12 @@ export class Player extends EventEmitter {
 
   public setVolume(volume: number): void {
     this.volume = Math.max(0, Math.min(1000, volume));
+    this.filters.volume = this.volume / 100;
     this.emit('volumeChange', this.volume);
+  }
+
+  public setFilters(filters: Filters): void {
+    this.filters = { ...this.filters, ...filters };
+    this.emit('filtersChange', this.filters);
   }
 }
