@@ -1,5 +1,6 @@
-export * from './Player.js';
-export * from './Manager.js';
+export * from './core/Player.js';
+export * from './core/Manager.js';
+export * from './typings/index.js';
 
-export const version = '1.0.0';
+export const version = '1.0.3';
 export const author = 'ProjectInkDp';
