@@ -1,6 +1,6 @@
 {
   "name": "@projectinkdp/auris-player",
-  "version": "1.0.5",
+  "version": "1.0.6-dev.0bb3412",
   "description": "The official high-performance audio engine for AurisLink.",
   "repository": {
     "type": "git",
@@ -22,13 +22,14 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "vitest run"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.5"
   }
 }

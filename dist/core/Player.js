@@ -4,6 +4,7 @@ export class Player extends EventEmitter {
     track = null;
     volume = 100;
     paused = false;
+    filters = {};
     state;
     constructor(guildId) {
         super();
@@ -37,6 +38,11 @@ export class Player extends EventEmitter {
     }
     setVolume(volume) {
         this.volume = Math.max(0, Math.min(1000, volume));
+        this.filters.volume = this.volume / 100;
         this.emit('volumeChange', this.volume);
+    }
+    setFilters(filters) {
+        this.filters = { ...this.filters, ...filters };
+        this.emit('filtersChange', this.filters);
     }
 }
