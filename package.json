@@ -1,6 +1,6 @@
 {
   "name": "@projectinkdp/auris-player",
-  "version": "1.0.6-dev.0bb3412",
+  "version": "1.0.6-dev.69b4dde",
   "description": "The official high-performance audio engine for AurisLink.",
   "repository": {
     "type": "git",
